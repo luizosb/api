@@ -30,10 +30,3 @@ public record MedicoDTO(
         EnderecoDTO endereco
 ) {
 }
-
-/**
- * @NotBlank > utilizado para fazer uma validação para o valor não chegar nulo e nem em braco.
- * @Email > validação para casos em que o dado é um email
- * @NotNull > utilizado nesse caso no lugar de NotBlank pois é uma classe de fora
- * @Pattern >  porque ele é um número de 4 a 6 dígitos. Dentro da segunda anotação, para esclarecer a quantidade de dígitos passaremos a expressão regular, é de 4 a 6 digitos.
- */

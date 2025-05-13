@@ -20,7 +20,6 @@ public class MedicoController {
 
     /**
      * Para pegar do corpo da requisição, para informarmos isso para o Spring, incluiremos a anotação @RequestBody neste parâmetro.
-     *
      * Vamos inserir a anotação @Transactional, pois
      * como esse é um metodo de escrita, que consiste em um insert no banco de dados, precisamos ter uma transação ativa com ele.
      */
