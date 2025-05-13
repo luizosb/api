@@ -1,5 +1,6 @@
 package med.voll.api.medico.controller;
 
+import jakarta.validation.Valid;
 import med.voll.api.medico.DTO.MedicoDTO;
 
 import med.voll.api.medico.service.MedicoService;
@@ -19,10 +20,13 @@ public class MedicoController {
 
     /**
      * Para pegar do corpo da requisição, para informarmos isso para o Spring, incluiremos a anotação @RequestBody neste parâmetro.
+     *
+     * Vamos inserir a anotação @Transactional, pois
+     * como esse é um metodo de escrita, que consiste em um insert no banco de dados, precisamos ter uma transação ativa com ele.
      */
     @PostMapping
     @Transactional
-    public void cadastrarMedico(@RequestBody MedicoDTO medicoDTO){
+    public void cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO){
         medVollService.cadastrarMedico(medicoDTO);
     }
 
