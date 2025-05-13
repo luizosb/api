@@ -28,10 +28,11 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    public Paciente(String nome, String cpf, String email, String telefone) {
+    public Paciente(String nome, String cpf, String email, String telefone, EnderecoDTO enderecoDTO) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.telefone = telefone;
+        this.endereco = new Endereco(enderecoDTO);
     }
 }

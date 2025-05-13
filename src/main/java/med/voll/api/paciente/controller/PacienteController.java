@@ -1,8 +1,10 @@
 package med.voll.api.paciente.controller;
 
+import jakarta.validation.Valid;
 import med.voll.api.paciente.DTO.PacienteDTO;
 import med.voll.api.paciente.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @PostMapping
-    public void cadastrarPaciente(@RequestBody PacienteDTO pacienteDTO){
+    @Transactional
+    public void cadastrarPaciente(@RequestBody @Valid PacienteDTO pacienteDTO){
         pacienteService.cadastrarPaciente(pacienteDTO);
     }
 }
