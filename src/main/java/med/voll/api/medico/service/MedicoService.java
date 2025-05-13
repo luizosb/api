@@ -14,5 +14,6 @@ public class MedicoService {
 
     public void cadastrarMedico(MedicoDTO medicoDTO) {
         medicoRepository.save(new Medico(medicoDTO));
+
     }
 }
