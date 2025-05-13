@@ -1,10 +1,11 @@
 package med.voll.api.endereco.DTO;
 
-public record EnderecoDTO(String logradouro,
-                          String número,
+public record EnderecoDTO(
+                          String logradouro,
+                          String numero,
                           String complemento,
                           String bairro,
                           String cidade,
-                          String UF,
-                          String CEP) {
+                          String uf,
+                          String cep) {
 }
