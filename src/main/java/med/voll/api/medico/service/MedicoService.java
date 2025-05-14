@@ -25,7 +25,7 @@ public class MedicoService {
     }
 
     public Page<MedicoListagemDTO> buscarTodosMedicos(Pageable paginacao) {
-        return medicoRepository.findAll(paginacao).map(MedicoListagemDTO::new);
+        return medicoRepository.findAllByAtivoTrue(paginacao).map(MedicoListagemDTO::new);
     }
 
     /**
@@ -36,5 +36,10 @@ public class MedicoService {
     public void atualizarDadoMedico(@Valid MedicoAtualizarDTO medicoAtualizarDTO) {
         var medico = medicoRepository.getReferenceById(medicoAtualizarDTO.id());
         medico.atualizarDados(medicoAtualizarDTO);
+    }
+
+    public void deletarMedico(Long id) {
+        var medico = medicoRepository.getReferenceById(id);
+        medico.excluir();
     }
 }
