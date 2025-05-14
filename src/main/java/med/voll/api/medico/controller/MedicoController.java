@@ -48,7 +48,7 @@ public class MedicoController {
         medVollService.atualizarDadoMedico(medicoAtualizarDTO);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     @Transactional
     public void deletarMedico (@PathVariable Long id){
         medVollService.deletarMedico(id);
