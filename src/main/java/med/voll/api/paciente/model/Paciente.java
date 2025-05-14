@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.endereco.DTO.EnderecoDTO;
 import med.voll.api.endereco.model.Endereco;
+import med.voll.api.paciente.DTO.PacienteAtualizarDTO;
 import med.voll.api.paciente.DTO.PacienteDTO;
 
 @Entity
@@ -25,6 +26,7 @@ public class Paciente {
     private String email;
     private String telefone;
     private String cpf;
+    private Boolean ativo;
 
     @Embedded
     private Endereco endereco;
@@ -35,5 +37,22 @@ public class Paciente {
         this.email = pacienteDTO.email();
         this.telefone = pacienteDTO.telefone();
         this.endereco = new Endereco(pacienteDTO.endereco());
+        this.ativo = true;
+    }
+
+    public void atualizarDado(PacienteAtualizarDTO pacienteAtualizarDTO) {
+        if (pacienteAtualizarDTO.nome() != null) {
+            this.nome = pacienteAtualizarDTO.nome();
+        }
+        if (pacienteAtualizarDTO.telefone() != null) {
+            this.telefone = pacienteAtualizarDTO.telefone();
+        }
+        if (pacienteAtualizarDTO.nome() != null) {
+            this.endereco = new Endereco(pacienteAtualizarDTO.endereco());
+        }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }
