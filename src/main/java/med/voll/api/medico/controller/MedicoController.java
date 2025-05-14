@@ -11,8 +11,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
@@ -41,7 +39,7 @@ public class MedicoController {
      * sem necessidade de escrever no Postman. Utilizo o postman apenas caso queira editar minha pesquisa.
      */
     @GetMapping
-    public Page<MedicoListagemDTO> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"}) Pageable paginacao){
+    public Page<MedicoListagemDTO> listar(@PageableDefault(size = 200, page = 0, sort = {"nome"}) Pageable paginacao){
         return medVollService.buscarTodosMedicos(paginacao);
     }
 }
