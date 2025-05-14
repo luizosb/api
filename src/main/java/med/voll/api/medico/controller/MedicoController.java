@@ -39,7 +39,7 @@ public class MedicoController {
      * sem necessidade de escrever no Postman. Utilizo o postman apenas caso queira editar minha pesquisa.
      */
     @GetMapping
-    public Page<MedicoListagemDTO> listar(@PageableDefault(size = 200, page = 0, sort = {"nome"}) Pageable paginacao){
+    public Page<MedicoListagemDTO> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"}) Pageable paginacao){
         return medVollService.buscarTodosMedicos(paginacao);
     }
 }
