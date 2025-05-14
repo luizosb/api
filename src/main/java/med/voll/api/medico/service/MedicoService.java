@@ -1,5 +1,7 @@
 package med.voll.api.medico.service;
 
+import jakarta.validation.Valid;
+import med.voll.api.medico.DTO.MedicoAtualizarDTO;
 import med.voll.api.medico.DTO.MedicoDTO;
 import med.voll.api.medico.DTO.MedicoListagemDTO;
 import med.voll.api.medico.model.Medico;
@@ -24,5 +26,15 @@ public class MedicoService {
 
     public Page<MedicoListagemDTO> buscarTodosMedicos(Pageable paginacao) {
         return medicoRepository.findAll(paginacao).map(MedicoListagemDTO::new);
+    }
+
+    /**
+     *Como estou acessando o dado apenas pelo ID e não pelo corpo, eu uso getReferenceByID e não findByID.
+     * FindbyID -> eager, traz todos os dados.
+     * GetReferenceById -> lazy, traz apenas os dados sob demanda.
+     */
+    public void atualizarDadoMedico(@Valid MedicoAtualizarDTO medicoAtualizarDTO) {
+        var medico = medicoRepository.getReferenceById(medicoAtualizarDTO.id());
+        medico.atualizarDados(medicoAtualizarDTO);
     }
 }

@@ -4,6 +4,7 @@ import med.voll.api.medico.model.Especialidade;
 import med.voll.api.medico.model.Medico;
 
 public record MedicoListagemDTO(
+        Long id,
         String nome,
         String email,
         String crm,
@@ -11,6 +12,6 @@ public record MedicoListagemDTO(
 ) {
 
     public MedicoListagemDTO (Medico medico){
-        this(medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
+        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
     }
 }

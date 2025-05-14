@@ -1,6 +1,7 @@
 package med.voll.api.medico.controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.medico.DTO.MedicoAtualizarDTO;
 import med.voll.api.medico.DTO.MedicoDTO;
 import med.voll.api.medico.DTO.MedicoListagemDTO;
 import med.voll.api.medico.service.MedicoService;
@@ -29,17 +30,22 @@ public class MedicoController {
         medVollService.cadastrarMedico(medicoDTO);
     }
 
-
     /**
      *Para buscar paginação com essa rota basta utilizar assim no postman:
      * http://localhost:8080/medicos?size=1&page=1 onde size é a quantidade de dados que irá trazer e page a pagina.
      * São parametros que existem no spring para facilitar o processo.
-     *
      * No entanto, utilizamos a anotação PageableDefault para setar a quantidade, paginação e em qual ordem irá trazer os dados,
      * sem necessidade de escrever no Postman. Utilizo o postman apenas caso queira editar minha pesquisa.
      */
     @GetMapping
     public Page<MedicoListagemDTO> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"}) Pageable paginacao){
         return medVollService.buscarTodosMedicos(paginacao);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizarMedico (@RequestBody @Valid MedicoAtualizarDTO medicoAtualizarDTO){
+        medVollService.atualizarDadoMedico(medicoAtualizarDTO);
+
     }
 }
