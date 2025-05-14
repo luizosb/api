@@ -42,4 +42,5 @@ public class Medico {
         this.endereco = new Endereco(medicoDTO.endereco());
         this.especialidade = medicoDTO.especialidade();
     }
+
 }

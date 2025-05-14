@@ -2,14 +2,15 @@ package med.voll.api.medico.controller;
 
 import jakarta.validation.Valid;
 import med.voll.api.medico.DTO.MedicoDTO;
-
+import med.voll.api.medico.DTO.MedicoListagemDTO;
 import med.voll.api.medico.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
@@ -29,4 +30,14 @@ public class MedicoController {
         medVollService.cadastrarMedico(medicoDTO);
     }
 
+
+    /**
+     *Para buscar paginação com essa rota basta utilizar assim no postman:
+     * http://localhost:8080/medicos?size=1&page=1 onde size é a quantidade de dados que irá trazer e page a pagina.
+     * São parametros que existem no spring para facilitar o processo.
+     */
+    @GetMapping
+    public Page<MedicoListagemDTO> listar(Pageable paginacao){
+        return medVollService.buscarTodosMedicos(paginacao);
+    }
 }
