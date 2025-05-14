@@ -9,10 +9,9 @@ import med.voll.api.endereco.DTO.EnderecoDTO;
 import med.voll.api.medico.model.Especialidade;
 
 /**
- *Os nomes nos DTO tem que ser igual ao que está sendo mandado no JSON. Cammel case
+ *Os nomes nos DTO tem que ser igual ao que está sendo mandado no JSON Cammel case
  */
 public record MedicoDTO(
-
         @NotBlank
         String nome,
         @NotBlank

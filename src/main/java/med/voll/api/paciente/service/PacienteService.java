@@ -13,6 +13,6 @@ public class PacienteService {
     PacienteRepository pacienteRepository;
 
     public void cadastrarPaciente(PacienteDTO pacienteDTO){
-        pacienteRepository.save(new Paciente(pacienteDTO.nome(), pacienteDTO.cpf(), pacienteDTO.email(), pacienteDTO.telefone(), pacienteDTO.endereco()));
+        pacienteRepository.save(new Paciente(pacienteDTO));
     }
 }

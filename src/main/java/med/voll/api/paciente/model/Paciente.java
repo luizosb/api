@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.endereco.DTO.EnderecoDTO;
 import med.voll.api.endereco.model.Endereco;
+import med.voll.api.paciente.DTO.PacienteDTO;
 
 @Entity
 @Table(name = "pacientes")
@@ -17,7 +18,7 @@ import med.voll.api.endereco.model.Endereco;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -28,11 +29,11 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    public Paciente(String nome, String cpf, String email, String telefone, EnderecoDTO enderecoDTO) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.endereco = new Endereco(enderecoDTO);
+    public Paciente(PacienteDTO pacienteDTO) {
+        this.nome = pacienteDTO.nome();
+        this.cpf = pacienteDTO.cpf();
+        this.email = pacienteDTO.email();
+        this.telefone = pacienteDTO.telefone();
+        this.endereco = new Endereco(pacienteDTO.endereco());
     }
 }
