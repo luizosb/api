@@ -3,14 +3,17 @@ package med.voll.api.medico.controller;
 import jakarta.validation.Valid;
 import med.voll.api.medico.DTO.MedicoAtualizarDTO;
 import med.voll.api.medico.DTO.MedicoDTO;
+import med.voll.api.medico.DTO.MedicoInfoDetalhadaDTO;
 import med.voll.api.medico.DTO.MedicoListagemDTO;
 import med.voll.api.medico.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/medicos")
@@ -26,8 +29,10 @@ public class MedicoController {
      */
     @PostMapping
     @Transactional
-    public void cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO){
-        medVollService.cadastrarMedico(medicoDTO);
+    public ResponseEntity cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriComponentsBuilder){
+        var medico = medVollService.cadastrarMedico(medicoDTO);
+        var uri = uriComponentsBuilder.path("/medicos/{id}").buildAndExpand().toUri();
+        return ResponseEntity.created(uri).body(new MedicoInfoDetalhadaDTO(medico));
     }
 
     /**
@@ -38,19 +43,27 @@ public class MedicoController {
      * sem necessidade de escrever no Postman. Utilizo o postman apenas caso queira editar minha pesquisa.
      */
     @GetMapping
-    public Page<MedicoListagemDTO> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"}) Pageable paginacao){
-        return medVollService.buscarTodosMedicos(paginacao);
+    public ResponseEntity<Page<MedicoListagemDTO>> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"}) Pageable paginacao){
+        var page = medVollService.buscarTodosMedicos(paginacao);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping
     @Transactional
-    public void atualizarMedico (@RequestBody @Valid MedicoAtualizarDTO medicoAtualizarDTO){
-        medVollService.atualizarDadoMedico(medicoAtualizarDTO);
+    public ResponseEntity atualizarMedico (@RequestBody @Valid MedicoAtualizarDTO medicoAtualizarDTO){
+        return ResponseEntity.ok(new MedicoInfoDetalhadaDTO(medVollService.atualizarDadoMedico(medicoAtualizarDTO)));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void deletarMedico (@PathVariable Long id){
+    public ResponseEntity deletarMedico (@PathVariable Long id){
         medVollService.deletarMedico(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalharMedico (@PathVariable Long id){
+        var medico = medVollService.dadoDetalhadoMedico(id);
+        return ResponseEntity.ok(new MedicoInfoDetalhadaDTO(medico));
     }
 }

@@ -19,9 +19,8 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public void cadastrarMedico(MedicoDTO medicoDTO) {
-        medicoRepository.save(new Medico(medicoDTO));
-
+    public Medico cadastrarMedico(MedicoDTO medicoDTO) {
+        return medicoRepository.save(new Medico(medicoDTO));
     }
 
     public Page<MedicoListagemDTO> buscarTodosMedicos(Pageable paginacao) {
@@ -33,13 +32,21 @@ public class MedicoService {
      * FindbyID -> eager, traz todos os dados.
      * GetReferenceById -> lazy, traz apenas os dados sob demanda.
      */
-    public void atualizarDadoMedico(@Valid MedicoAtualizarDTO medicoAtualizarDTO) {
+    public Medico atualizarDadoMedico(@Valid MedicoAtualizarDTO medicoAtualizarDTO) {
         var medico = medicoRepository.getReferenceById(medicoAtualizarDTO.id());
         medico.atualizarDados(medicoAtualizarDTO);
+        return medico;
     }
 
     public void deletarMedico(Long id) {
         var medico = medicoRepository.getReferenceById(id);
         medico.excluir();
     }
+
+    public Medico dadoDetalhadoMedico(Long id) {
+        var medico = medicoRepository.getReferenceById(id);
+        return medico;
+    }
+
+
 }
