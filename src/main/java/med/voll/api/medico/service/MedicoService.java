@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class MedicoService {
 
@@ -44,8 +42,7 @@ public class MedicoService {
     }
 
     public Medico dadoDetalhadoMedico(Long id) {
-        var medico = medicoRepository.getReferenceById(id);
-        return medico;
+        return medicoRepository.getReferenceById(id);
     }
 
 

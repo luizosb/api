@@ -17,21 +17,26 @@ public class PacienteService {
     @Autowired
     PacienteRepository pacienteRepository;
 
-    public void cadastrarPaciente(PacienteDTO pacienteDTO){
-        pacienteRepository.save(new Paciente(pacienteDTO));
+    public Paciente cadastrarPaciente(PacienteDTO pacienteDTO){
+        return pacienteRepository.save(new Paciente(pacienteDTO));
     }
 
     public Page<PacienteListagemDTO> listarPacientes(Pageable paginacao) {
         return pacienteRepository.findAllByAtivoTrue(paginacao).map(PacienteListagemDTO::new);
     }
 
-    public void atualizarPaciente(@Valid PacienteAtualizarDTO pacienteAtualizarDTO) {
+    public Paciente atualizarPaciente(@Valid PacienteAtualizarDTO pacienteAtualizarDTO) {
         var paciente = pacienteRepository.getReferenceById(pacienteAtualizarDTO.id());
         paciente.atualizarDado(pacienteAtualizarDTO);
+        return paciente;
     }
 
     public void deletarPaciente(Long id) {
         var paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();
+    }
+
+    public Paciente dadoDetalhadoPaciente(Long id) {
+        return pacienteRepository.getReferenceById(id);
     }
 }

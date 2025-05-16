@@ -48,10 +48,18 @@ public class MedicoController {
         return ResponseEntity.ok(page);
     }
 
+    /**
+     * Utilização de ResponseEntity é uma boa prática pois melhora o cabeçalho do Location.
+     * Created(204) -> para criar um dado (utilização de Uri)
+     * OK(200) -> retornando resposta 200 e com o dado o qual está buscando dentro do parenteses.
+     * No Content -> para retornar retornar nada.
+     */
+
     @PutMapping
     @Transactional
     public ResponseEntity atualizarMedico (@RequestBody @Valid MedicoAtualizarDTO medicoAtualizarDTO){
-        return ResponseEntity.ok(new MedicoInfoDetalhadaDTO(medVollService.atualizarDadoMedico(medicoAtualizarDTO)));
+        var medico = medVollService.atualizarDadoMedico(medicoAtualizarDTO);
+        return ResponseEntity.ok(new MedicoInfoDetalhadaDTO(medico));
     }
 
     @DeleteMapping("/{id}")
