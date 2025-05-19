@@ -17,20 +17,20 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String gerarToken(Usuario usuario){
+    public String gerarToken(Usuario usuario) {
         try {
-            var algoritmo = Algorithm.HMAC256(secret);
+            var algoritmo = Algorithm.HMAC256(secret); // algoritmo de assinatura com chave secreta
             return JWT.create()
-                    .withIssuer("API Voll.med")
-                    .withSubject(usuario.getLogin())
-                    .withExpiresAt(dataExperacao())
-                    .sign(algoritmo);
-        } catch (JWTCreationException exception){
+                    .withIssuer("API Voll.med")                 // quem criou o token
+                    .withSubject(usuario.getLogin())           // representa o "dono" do token
+                    .withExpiresAt(dataExpiracao())            // validade
+                    .sign(algoritmo);                          // assinatura com algoritmo HMAC
+        } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar token JWT", exception);
         }
     }
 
-    private Instant dataExperacao() {
+    private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }
