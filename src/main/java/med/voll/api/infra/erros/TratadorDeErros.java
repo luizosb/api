@@ -1,9 +1,8 @@
 package med.voll.api.infra.erros;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.FieldResult;
+import med.voll.api.infra.DTO.MensagemErroDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,20 +27,11 @@ public class TratadorDeErros {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErros400(MethodArgumentNotValidException exception){
         var erros = exception.getFieldErrors();
-        return ResponseEntity.badRequest().body(erros.stream().map(DadosErrosValidacao::new).toList());
+        return ResponseEntity.badRequest().body(erros.stream().map(MensagemErroDTO::new).toList());
     }
-
     /**
      * erro.getField(): nos devolve o nome do campo
      * erro.getDefaultMessage(): nos devolve a mensagem para um campo específico.
-     *
-     * Como vou utilizar apenas aqui o DadosErrosValidacao, instancia aqui mesmo.
      */
-
-    private record DadosErrosValidacao(String campo, String mensagem){
-        public DadosErrosValidacao(FieldError erro){
-            this(erro.getField(), erro.getDefaultMessage());
-        }
-    }
 
 }
