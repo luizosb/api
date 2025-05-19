@@ -1,7 +1,7 @@
-package med.voll.api.infra.erros;
+package med.voll.api.infra.exception.erros;
 
 import jakarta.persistence.EntityNotFoundException;
-import med.voll.api.infra.DTO.MensagemErroDTO;
+import med.voll.api.infra.exception.DTO.MensagemErroDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
