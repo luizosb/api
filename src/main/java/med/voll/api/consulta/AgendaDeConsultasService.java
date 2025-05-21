@@ -30,7 +30,11 @@ public class AgendaDeConsultasService {
             throw new ValidacaoException("Id do medico informado não existe");
         }
 
-        var paciente = pacienteRepository.findById(dados.idPaciente()).get();
+        /**
+         * Podemos trocar o findById() pelo getReferenceById()
+         * também na variável paciente, pois não queremos carregar o objeto para manipula-lo, mas só para atribui-lo a outro objeto.
+         */
+        var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
         var consulta = new Consulta(null, medico, paciente, dados.data());
 
@@ -39,6 +43,15 @@ public class AgendaDeConsultasService {
     }
 
     private Medico escolherMedico(@Valid DadosAgendamentoConsulta dados) {
-        return null;
+        if (dados.idMedico() != null){
+            return medicoRepository.getReferenceById(dados.idMedico());
+        }
+
+        if (dados.especialidade() == null){
+            throw new ValidacaoException("Especialidade é obrigatória quando médico não for escolhido!");
+        }
+
+        return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
+
     }
 }
