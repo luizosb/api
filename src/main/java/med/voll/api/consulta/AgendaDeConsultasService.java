@@ -8,6 +8,9 @@ import med.voll.api.paciente.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 public class AgendaDeConsultasService {
 
@@ -36,7 +39,7 @@ public class AgendaDeConsultasService {
          */
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
-        var consulta = new Consulta(null, medico, paciente, dados.data());
+        var consulta = new Consulta(null, medico, paciente, null, dados.data());
 
         consultaRepository.save(consulta);
 
@@ -52,6 +55,22 @@ public class AgendaDeConsultasService {
         }
 
         return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
+
+    }
+
+    public void cancelarConsulta(DadosCancelamentoConsulta cancelamentoConsulta) {
+        if (!consultaRepository.existsById(cancelamentoConsulta.consulta().getId())){
+            throw new ValidacaoException("Consulta inexistente");
+        }
+
+        var intervalo = LocalDateTime.now().isBefore(cancelamentoConsulta.consulta().getData().minusHours(24));
+
+        if (!intervalo){
+            throw  new ValidacaoException("Consulta não pode ser cancelada por ultrapassar o tempo de 24 horas antes.");
+        }
+
+        var consulta = consultaRepository.getReferenceById(cancelamentoConsulta.consulta().getId());
+        consulta.cancelar(consulta.getMotivoCancelamento());
 
     }
 }

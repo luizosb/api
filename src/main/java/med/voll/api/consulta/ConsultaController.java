@@ -24,4 +24,11 @@ public class ConsultaController {
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
     }
 
+    public ResponseEntity cancelar(DadosCancelamentoConsulta cancelamentoConsulta){
+        agendaDeConsultasService.cancelarConsulta(cancelamentoConsulta);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }
