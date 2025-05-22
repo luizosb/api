@@ -1,6 +1,11 @@
-package med.voll.api.consulta;
+package med.voll.api.consulta.servico;
 
 import jakarta.validation.Valid;
+import med.voll.api.consulta.DTO.DadosAgendamentoConsulta;
+import med.voll.api.consulta.DTO.DadosCancelamentoConsulta;
+import med.voll.api.consulta.DTO.DadosDetalhamentoConsulta;
+import med.voll.api.consulta.model.Consulta;
+import med.voll.api.consulta.repository.ConsultaRepository;
 import med.voll.api.consulta.validacoes.ValidadorInterface;
 import med.voll.api.infra.exception.ValidacaoException;
 import med.voll.api.medico.model.Medico;

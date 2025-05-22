@@ -1,7 +1,8 @@
-package med.voll.api.consulta;
+package med.voll.api.consulta.repository;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import med.voll.api.consulta.model.Consulta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

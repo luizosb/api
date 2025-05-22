@@ -1,7 +1,10 @@
-package med.voll.api.consulta;
+package med.voll.api.consulta.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import med.voll.api.consulta.DTO.DadosAgendamentoConsulta;
+import med.voll.api.consulta.DTO.DadosCancelamentoConsulta;
+import med.voll.api.consulta.servico.AgendaDeConsultasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

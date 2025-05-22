@@ -1,7 +1,8 @@
-package med.voll.api.consulta;
+package med.voll.api.consulta.DTO;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import med.voll.api.consulta.model.MotivoCancelamento;
+import med.voll.api.consulta.model.Consulta;
 
 public record DadosCancelamentoConsulta(
         @NotNull

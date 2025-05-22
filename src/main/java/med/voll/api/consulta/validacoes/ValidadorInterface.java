@@ -1,6 +1,6 @@
 package med.voll.api.consulta.validacoes;
 
-import med.voll.api.consulta.DadosAgendamentoConsulta;
+import med.voll.api.consulta.DTO.DadosAgendamentoConsulta;
 
 public interface ValidadorInterface {
 

@@ -1,4 +1,4 @@
-package med.voll.api.consulta;
+package med.voll.api.consulta.model;
 
 import lombok.Getter;
 
