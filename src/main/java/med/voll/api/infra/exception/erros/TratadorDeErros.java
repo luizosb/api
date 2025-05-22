@@ -31,7 +31,7 @@ public class TratadorDeErros {
         return ResponseEntity.badRequest().body(erros.stream().map(MensagemErroDTO::new).toList());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(ValidacaoException.class)
     public ResponseEntity tratarRegraDeNegocio(ValidacaoException exception){
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
