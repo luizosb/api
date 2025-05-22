@@ -1,6 +1,7 @@
 package med.voll.api.consulta;
 
 import jakarta.validation.Valid;
+import med.voll.api.consulta.validacoes.ValidadorInterface;
 import med.voll.api.infra.exception.ValidacaoException;
 import med.voll.api.medico.model.Medico;
 import med.voll.api.medico.repository.MedicoRepository;
@@ -8,8 +9,8 @@ import med.voll.api.paciente.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AgendaDeConsultasService {
@@ -23,8 +24,11 @@ public class AgendaDeConsultasService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @Autowired
+    private List<ValidadorInterface> validadores;
 
-    public void agendar(@Valid DadosAgendamentoConsulta dados){
+
+    public DadosDetalhamentoConsulta agendar(@Valid DadosAgendamentoConsulta dados){
         if (!pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException("Id do paciente informado não existe");
         }
@@ -33,15 +37,22 @@ public class AgendaDeConsultasService {
             throw new ValidacaoException("Id do medico informado não existe");
         }
 
+        validadores.forEach(v-> v.validar(dados));
+
         /**
          * Podemos trocar o findById() pelo getReferenceById()
          * também na variável paciente, pois não queremos carregar o objeto para manipula-lo, mas só para atribui-lo a outro objeto.
          */
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
+
+        if (medico == null){
+            throw new ValidacaoException("Não existe médico disponível");
+        }
         var consulta = new Consulta(null, medico, paciente, null, dados.data());
 
         consultaRepository.save(consulta);
+        return new DadosDetalhamentoConsulta(consulta);
 
     }
 

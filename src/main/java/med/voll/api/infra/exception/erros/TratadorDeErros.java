@@ -2,6 +2,7 @@ package med.voll.api.infra.exception.erros;
 
 import jakarta.persistence.EntityNotFoundException;
 import med.voll.api.infra.exception.DTO.MensagemErroDTO;
+import med.voll.api.infra.exception.ValidacaoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,11 @@ public class TratadorDeErros {
     public ResponseEntity tratarErros400(MethodArgumentNotValidException exception){
         var erros = exception.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(MensagemErroDTO::new).toList());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity tratarRegraDeNegocio(ValidacaoException exception){
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
     /**
      * erro.getField(): nos devolve o nome do campo
