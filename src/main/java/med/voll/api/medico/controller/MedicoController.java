@@ -33,7 +33,7 @@ public class MedicoController {
     @Transactional
     public ResponseEntity cadastrarMedico(@RequestBody @Valid MedicoDTO medicoDTO, UriComponentsBuilder uriComponentsBuilder){
         var medico = medVollService.cadastrarMedico(medicoDTO);
-        var uri = uriComponentsBuilder.path("/medicos/{id}").buildAndExpand().toUri();
+        var uri = uriComponentsBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
         return ResponseEntity.created(uri).body(new MedicoInfoDetalhadaDTO(medico));
     }
 
